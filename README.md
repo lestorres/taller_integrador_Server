@@ -1,5 +1,4 @@
-# taller_integrador_Server
-Servidor Local APRS Trackdirect
+# Taller Integrador: Servidor Local APRS Trackdirect
 
 
 ## 📡 Grupo de Trabajo: Servidor Local APRS Trackdirect
