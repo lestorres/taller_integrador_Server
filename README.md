@@ -171,12 +171,20 @@ Además se deben descargar e instalar lo siguientes programas:
 ![hardware](./figuras/harware_conf.png)
 ### Paso 2: Configuración inicial en Virtual-Box
 
-Una vez completada la asignación de recurso, se finaliza el proceso y la máquina virtual debe aparecer, dentro de la interfaz y se puede realizar su primer encendido.
+Una vez completada la asignación de recurso, se finaliza el proceso y la máquina virtual debe aparecer, dentro de la interfaz.
 
 ![arranque](./figuras/arranque_inicial_server.png)
 
 ### Paso 2: Configuración en Virtual-Box
+Para la configuración para convertir la máquina virtual en un servidor, se deben hacer alguna configuraciones iniciales.
 
+1. Antes de arrancar la máquina se deben habilitar dos puertos de Red, uno de tipo red puente y otro de red interna, como se muestra en las siguientes Figuras.
+
+###### Red Puente
+![red_puente](./figuras/red_puente.png)
+
+###### Red Interna
+![red_puente](./figuras/red_interna.png)
 
 ### Paso 3: Instalación Webmin
 
