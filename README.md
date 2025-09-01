@@ -80,7 +80,7 @@ La modulación de LoRa es **Chirp Spread Spectrum (CSS)**, clasificada bajo la c
 
 ### APRS
 
-El **Automatic Packet Reporting System (APRS)**, usado principalmente por radioaficionados:
+El **Automatic Packet Reporting System (APRS)**:
 
 - **No es de uso libre**. Se requiere una **licencia de radioaficionado** otorgada por MICITT.  
 - Debe operar dentro de las frecuencias asignadas específicamente para radioaficionados según el PNAF.  
