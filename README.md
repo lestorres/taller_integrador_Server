@@ -128,7 +128,7 @@ Configurar una aplicación de servidor local APRS Trackdirect que permita la rec
 
 Este grupo se enfoca en la configuración y gestión de un servidor local APRS Trackdirect.  
 
-### Responsabilidades principales:  
+#### Responsabilidades principales:  
 - Configuración del servidor en entorno local.  
 - Integración con receptores APRS.  
 - Visualización y análisis de tramas recibidas.  
@@ -136,6 +136,12 @@ Este grupo se enfoca en la configuración y gestión de un servidor local APRS T
 - Mantenimiento y solución de problemas.  
 
 ---
+## Vista Funcional y Operacional
+*(Próximamente: Vista desde la Funcionalidad y Vista desde las operaciones y transacciones)*  
+
+
+## ⚙️ Arquitectura del Servidor 
+*(Próximamente: Arquitectura DiagramaS de bloques y flujo)*  
 
 ## ⚙️ Instalación y Configuración del Servidor 
 
@@ -146,20 +152,30 @@ Como primeros pasos de configuración preliminar se debe:
 
 ![virtualizacion](./figuras/bios_virtualizaciom.png)
 
-
 Además se deben descargar e instalar lo siguientes programas:
 
 -  Ubuntu Server 
 ![Pagina Ubuntu](./figuras/pagina_ubuntu_server.png)
 
 -  Virtual Box 
-![Pagina Ubuntu](./figuras/pagina_virtual_box.png)
+![Virtual Box](./figuras/pagina_virtual_box.png)
 
-### Paso 1: Instalación de imagen ISO
+### Paso 1: Creación de Máquina Virtual
 
+1) Primeramente, dentro de la aplicación de virtual Box se debe crear una nueva máquina virtual y se debe cargar la imagen ISO correspondiente.
 
+![ISO](./figuras/cargar_iso.png)
 
+2. Los recursos disponibles dependen de cada sistema, pero siempre es recomendable elegir recursos moderados y recomendados para la aplicacion, se puede usar la barra verde de la interfaz como guía de asignación de los recursos. 
+
+![hardware](./figuras/harware_conf.png)
 ### Paso 2: Configuración inicial en Virtual-Box
+
+Una vez completada la asignación de recurso, se finaliza el proceso y la máquina virtual debe aparecer, dentro de la interfaz y se puede realizar su primer encendido.
+
+![arranque](./figuras/arranque_inicial_server.png)
+
+### Paso 2: Configuración en Virtual-Box
 
 
 ### Paso 3: Instalación Webmin
