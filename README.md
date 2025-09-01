@@ -53,8 +53,51 @@ Este repositorio contiene la configuración y documentación de un servidor loca
 ---
 
 ### 🔹 Legislación de Frecuencias en Costa Rica (PNAF)  
-*(Próximamente:)
 
+En Costa Rica, el **Plan Nacional de Atribución de Frecuencias (PNAF)**, regulado por el Decreto Ejecutivo N° 44010-MICITT, establece el marco normativo para la asignación de frecuencias en el país. Este documento define:
+
+- Las bandas de frecuencia asignadas a distintos servicios de telecomunicaciones.  
+- Las potencias máximas permitidas para cada banda.  
+- Las clases de emisión permitidas.  
+- Otras condiciones específicas de operación.  
+
+El PNAF sigue las recomendaciones de la **Unión Internacional de Telecomunicaciones (UIT)** para la Región 2, adaptándolas a las necesidades locales de Costa Rica.
+
+---
+
+### LoRa
+
+Operan generalmente en las bandas **ISM (Industrial, Scientific and Medical)**, como 433 MHz y 915 MHz. Estas bandas:
+
+- Están contempladas en el PNAF bajo un régimen de **uso libre no licenciado**.  
+- Su operación está sujeta a restricciones como el límite de **Potencia Isotrópica Radiada Equivalente (PIRE)**, que varía según la frecuencia.  
+- Deben cumplir con límites de **ocupación de canal (duty cycle)** para evitar interferencias.  
+- Solo pueden usarse en aplicaciones que **no requieran protección contra interferencias**.  
+
+La modulación de LoRa es **Chirp Spread Spectrum (CSS)**, clasificada bajo la clase **G1D**.
+
+---
+
+### APRS
+
+El **Automatic Packet Reporting System (APRS)**, usado principalmente por radioaficionados:
+
+- **No es de uso libre**. Se requiere una **licencia de radioaficionado** otorgada por MICITT.  
+- Debe operar dentro de las frecuencias asignadas específicamente para radioaficionados según el PNAF.  
+- Emplea **modulación AFSK a 1200 bps en VHF**, clase de emisión **F1D**.  
+- La frecuencia más común en la Región 2 es **144.390 MHz** (banda de 2 metros), aunque el PNAF impone restricciones para modos digitales.  
+
+---
+
+### Límites de PIRE (Apéndice V del PNAF)
+
+| Banda (MHz)       | PIRE máximo |
+|------------------|------------|
+| 433.050 – 434.790 | 14 dBm     |
+| 902 – 928         | 30 dBm     |
+| 2400 – 2483.5     | 36 dBm     |
+
+Estas restricciones aplican tanto a **transmisores fijos como portátiles**, para evitar interferencias y garantizar el uso eficiente del espectro radioeléctrico.
 
 
 ---
