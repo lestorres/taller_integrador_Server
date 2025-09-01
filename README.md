@@ -59,8 +59,8 @@ Configurar una aplicación de servidor local APRS Trackdirect que permita la rec
 
 ## 🗓️ Plan de Trabajo  
 
+![Diagrama de Gantt](./figuras/diagrama_gantt.png)
 
----
 
 ## 👥 Grupo de Trabajo  
 
