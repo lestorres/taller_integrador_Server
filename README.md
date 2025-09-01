@@ -23,7 +23,21 @@ Este repositorio contiene la configuración y documentación de un servidor loca
 ## 📡 Fundamentos  
 
 ### 🔹 Fundamentos de APRS  
-*(Próximamente:)
+APRS (Automatic Packet Reporting System) es un protocolo de comunicaciones digitales utilizado principalmente por radioaficionados para transmitir información en tiempo real sobre ubicación, telemetría, mensajes y estado de estaciones.
+
+Conceptos Clave: 
+
+-Paquetes de Datos: APRS transmite información en forma de paquetes digitales, generalmente usando AX.25, un protocolo de capa de enlace de datos derivado de X.25.
+
+-Información de Ubicación: Cada estación puede enviar su posición GPS, velocidad, rumbo y altitud para que otros usuarios o aplicaciones puedan visualizarla en mapas en tiempo real.
+
+-Mensajería: Permite enviar mensajes cortos entre estaciones de radio sin necesidad de infraestructura centralizada.
+
+IGate y Digipeater:
+
+-IGate (Internet Gateway): Recibe paquetes APRS por radio y los envía a Internet, integrando la red global de APRS.
+
+-Digipeater: Repite paquetes APRS para extender el rango de comunicación entre estaciones.
 
 ---
 
