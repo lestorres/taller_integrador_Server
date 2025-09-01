@@ -89,10 +89,36 @@ Este grupo se enfoca en la configuración y gestión de un servidor local APRS T
 
 ---
 
-## ⚙️ Instalación y Configuración  
-*(Próximamente: pasos de instalación de Trackdirect en Linux, dependencias, configuración de puertos y conexión con iGates.)*  
+## ⚙️ Instalación y Configuración del Servidor 
+
+### Pre-Requisitos
+Como primeros pasos de configuración preliminar se debe:
+
+- Configurar desde la Interfaz de UEFI/BIOS la opción de virtualización.
+
+![virtualizacion](./figuras/bios_virtualizaciom.png)
+
+
+Además se deben descargar e instalar lo siguientes programas:
+
+-  Ubuntu Server 
+![Pagina Ubuntu](./figuras/pagina_ubuntu_server.png)
+
+-  Virtual Box 
+![Pagina Ubuntu](./figuras/pagina_virtual_box.png)
+
+### Paso 1: Instalación de imagen ISO
+
+
+
+### Paso 2: Configuración inicial en Virtual-Box
+
+
+### Paso 3: Instalación Webmin
 
 ---
+
+
 
 ## 🚀 Uso del Sistema  
 *(Próximamente: instrucciones de ejecución, acceso a la interfaz web y ejemplos de visualización en tiempo real.)*  
