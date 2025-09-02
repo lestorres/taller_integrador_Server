@@ -185,6 +185,28 @@ Para la configuración para convertir la máquina virtual en un servidor, se deb
 ###### Red Interna
 ![red_puente](./figuras/red_interna.png)
 
+2. Luego se deben configurar aspectos como idioma y teclado. 
+![idioma](./figuras/ubuntu_server_1.png)
+
+3. Se selecciona el tipo de instalación, para este caso Ubuntu Server por defecto.
+
+![install](./figuras/ubuntu_server_2.png)
+
+4. Se registra la configuración de red para su posterior uso, no se configura ninguna dirección proxy, se acepta la configuración de espejo de Ubuntu y se acepta la partición de disco por defecto.
+
+5. Se rellenan los espacios de configuración de perfil, con los deseados.
+
+![profile](./figuras/ubuntu_server_3.png)
+
+6. Se salta la configuración de Ubuntu-pro, la configuración de ssh se puede dejar para pasos posteriores, no se instalan ningun paquete de snap y se deja instalar la imagen y se reinicia la máquina. 
+
+![reboot](./figuras/ubuntu_server_4.png)
+
+7. Se ingresa el usuario y contraseña para acceder a sistema operativo. 
+
+![SO](./figuras/ubuntu_server_5.png)
+
+
 ### Paso 3: Instalación Webmin
 
 ---
