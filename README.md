@@ -209,7 +209,42 @@ Para la configuración para convertir la máquina virtual en un servidor, se deb
 
 ### Paso 3: Instalación Webmin
 
+##### Paso 1: Descargar Webmin
+1. Acceder a https://webmin.com/download/
+2. Seguir los pasos de instalación proporcionados en la página
+
+##### Paso 2: Verificar la Integridad de la Descarga
+Para verificar que el paquete de Webmin se descargó correctamente:
+```bash
+sha256sum webmin-current.deb
+```
+Comparar el resultado con la verificación de checksum proporcionada en la página de descarga.
+
+##### Paso 3: Instalar el Paquete de Webmin
+Una vez verificada la descarga, proceder con la instalación:
+```bash
+dpkg -i webmin-current.deb
+```
+
+##### Paso 4: Solucionar Dependencias (si es necesario)
+Si ocurren problemas de dependencias durante la instalación, resolverlos con:
+```bash
+sudo apt-get -f install
+```
+
+##### Paso 5: Acceder a la Interfaz Web de Webmin
+1. Abrir el navegador web y navegar a:
+   ```
+   https://[ip-del-servidor]:10000
+   ```
+   Donde `[ip-del-servidor]` es la dirección IP mostrada para la segunda tarjeta de red virtual `enp0s3` (listada después de `inet`)
+
+##### Paso 6: Iniciar Sesión
+Ingresar las credenciales del servidor para acceder al panel de control de Webmin.
+
 ---
+
+![webmin](./figuras/webmin.png)
 
 
 
