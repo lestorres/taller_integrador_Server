@@ -246,10 +246,57 @@ Ingresar las credenciales del servidor para acceder al panel de control de Webmi
 
 ![webmin](./figuras/webmin.png)
 
+## ⚙️ Instalación y Configuración de APRS Trackdirect
+Este apartado describe cómo instalar y configurar APRS Trackdirect en un servidor local Ubuntu.
+
+#### 🔹 Pre-Requisitos
+
+- Antes de iniciar la instalación:
+
+  - Tener instalado Docker y Docker Compose.
+Guía oficial de instalación de Docker: https://docs.docker.com/get-started/get-docker/
 
 
-## 🚀 Uso del Sistema  
-*(Próximamente: instrucciones de ejecución, acceso a la interfaz web y ejemplos de visualización en tiempo real.)*  
+##### 🔹 Paso 1: Clonar el Repositorio
+Clonar el repositorio de APRS Trackdirect: 
+```bash
+git clone https://github.com/tu_usuario/trackdirect.git
+cd trackdirect
+```
+
+##### 🔹 Paso 2: Configurar Archivos
+Editar los archivos de configuración según las necesidades del proyecto:
+```bash
+nano config/trackdirect.ini
+nano config/aprsc.conf
+nano config/postgresql.conf
+```
+##### 🔹 Paso 3: Iniciar la Aplicación con Docker Compose
+Levantar los contenedores de Trackdirect:
+```bash
+docker compose up
+```
+Para ejecutar en segundo plano (daemon):
+```bash
+docker compose up -d
+```
+Verificar los logs:
+```bash
+docker compose logs -f
+```
+
+##### 🔹 Paso 4: Acceder a la Interfaz Web
+Si la instalación fue correcta, abrir el navegador y acceder a la IP del servidor:
+```bash
+ip a 
+```
+Luego acceder usando la IP que aparece junto a inet:
+```bash 
+http://[IP_DEL_SERVIDOR]
+```
+- Asegurarse de que los paquetes APRS lleguen al servidor y confirmar que los datos se visualicen correctamente en la interfaz web.
+
+![trackdirect](./figuras/trackdirect.png)
 
 ---
 
