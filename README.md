@@ -136,12 +136,51 @@ Este grupo se enfoca en la configuración y gestión de un servidor local APRS T
 - Mantenimiento y solución de problemas.  
 
 ---
-## Vista Funcional y Operacional
-*(Próximamente: Vista desde la Funcionalidad y Vista desde las operaciones y transacciones)*  
+## Vista Funcional: Diagrama de Secuencia
+```mermaid
+sequenceDiagram
+    participant Tracker as 📡 Tracker APRS
+    participant Receptor as 📶 Receptor / iGate
+    participant Servidor as 🖥️ Servidor Local (Ubuntu + Docker)
+    participant Trackdirect as ⚙️ Trackdirect
+    participant DB as 🗄️ PostgreSQL
+    participant Web as 🌐 Interfaz Web
 
+    Tracker->>Receptor: Envía paquete APRS (AX.25 / AFSK / LoRa)
+    Receptor->>Servidor: Transfiere trama recibida
+    Servidor->>Trackdirect: Procesa y decodifica datos APRS
+    Trackdirect->>DB: Almacena ubicación, telemetría, mensajes
+    Trackdirect->>Web: Publica información en tiempo real
+    Web->>Usuarios: Visualización en mapas e informes
+```
 
 ## ⚙️ Arquitectura del Servidor 
-*(Próximamente: Arquitectura DiagramaS de bloques y flujo)*  
+```mermaid
+flowchart TB
+    subgraph "Equipo en Campo"
+        A1[GPS Tracker APRS]
+        A2[Radio LoRa / VHF]
+    end
+
+    subgraph "Infraestructura Local"
+        B1[Receptor APRS / iGate]
+        B2[Servidor Local Ubuntu]
+        B3[Docker + Trackdirect]
+        B4[Base de Datos PostgreSQL]
+        B5[Interfaz Webmin]
+    end
+
+    subgraph "Usuarios Finales"
+        C1[Laptop/PC]
+        C2[Dispositivo Móvil]
+    end
+
+    A1 --> A2 --> B1 --> B2
+    B2 --> B3 --> B4
+    B3 --> B5
+    B3 --> C1
+    B3 --> C2
+```
 
 ## ⚙️ Instalación y Configuración del Servidor 
 
