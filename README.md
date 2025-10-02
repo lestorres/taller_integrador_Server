@@ -1,9 +1,13 @@
 # 📡 Sistema de Monitoreo en Tiempo Real con APRS Trackdirect  
 
 Este repositorio contiene la configuración y documentación de un servidor local basado en **APRS Trackdirect** para el monitoreo de equipos de emergencia en incendios forestales. El sistema permite la recepción, procesamiento y visualización en tiempo real de datos APRS (Automatic Packet Reporting System) provenientes de *trackers* e *iGates*, sin depender de servicios externos en la nube.  
+---
+## 👥 Integrantes del proyecto
+
+- Lesmes Torres González  
+- Patrick Nepveu Nelson  
 
 ---
-
 ## 📑 Tabla de Contenidos
 1. [Fundamentos](#-fundamentos)  
    - [APRS](#-fundamentos-de-aprs)  
