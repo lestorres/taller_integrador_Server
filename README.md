@@ -450,6 +450,9 @@ El sistema mantiene la funcionalidad local sin pérdida de datos y sincroniza co
 El sistema puede ser monitoreado y administrado completamente desde Webmin, sin necesidad de acceso por terminal.
 
 ---
+
+## 📚 Referencias
+
 - Adelantado, F., Vilajosana, X., Tuset-Peiró, P., Martínez, B., Melià-Segui, J., & Watteyne, T. (2017). Understanding the Limits of LoRaWAN. IEEE Communications Magazine, 55(9), 34–40.
 https://arxiv.org/pdf/1607.08011 [arxiv.org]
 
