@@ -1,13 +1,22 @@
-# 📡 Sistema de Monitoreo en Tiempo Real con APRS Trackdirect  
+# 📡 Sistema de Monitoreo en Tiempo Real con APRS Trackdirect de equipos de emergencia en incendios forestales  
 
-Este repositorio contiene la configuración y documentación de un servidor local basado en **APRS Trackdirect** para el monitoreo de equipos de emergencia en incendios forestales. El sistema permite la recepción, procesamiento y visualización en tiempo real de datos APRS (Automatic Packet Reporting System) provenientes de *trackers* e *iGates*, sin depender de servicios externos en la nube.  
+## Resumen:
+
+Este proyecto implementa un sistema de monitoreo local basado en APRS Trackdirect, diseñado para el seguimiento en tiempo real de equipos de emergencia durante incendios forestales.
+
+El sistema permite operar sin conexión a Internet, utilizando comunicación de radio (LoRa o VHF) y un servidor local desplegado con Docker, lo que garantiza autonomía y resiliencia en zonas remotas.
+
+Incluye una interfaz web para la visualización de posiciones y mensajes APRS, una base de datos PostgreSQL para el almacenamiento de datos y herramientas de administración mediante Webmin.
+
+En este repositorio se documenta la configuración completa del servidor local, la instalación del entorno, y los procedimientos de operación, de manera que el sistema pueda ser replicado y adaptado en futuros despliegues. 
+
 ---
+
 ## 👥 Integrantes del proyecto
 
 - Lesmes Torres González  
 - Patrick Nepveu Nelson  
 
----
 ## 📑 Tabla de Contenidos
 1. [Fundamentos](#-fundamentos)  
    - [APRS](#-fundamentos-de-aprs)  
@@ -19,14 +28,13 @@ Este repositorio contiene la configuración y documentación de un servidor loca
 5. [Grupo de Trabajo](#-grupo-de-trabajo)  
 6. [Instalación y Configuración](#-instalación-y-configuración)  
 7. [Uso del Sistema](#-uso-del-sistema)  
-
+8. [Pruebas y Verificación](#-pruebas-y-verificación)  
 9. [Referencias](#-referencias)  
 
----
 
 ## 📡 Fundamentos  
 
-### 🔹 Fundamentos de APRS  
+### Fundamentos de APRS  
 **APRS (Automatic Packet Reporting System)** es un protocolo de comunicación digital usado por radioaficionados para transmitir información en tiempo real sobre ubicación, telemetría, mensajes y estado de estaciones.
 
 #### Conceptos Clave
@@ -343,5 +351,121 @@ http://[IP_DEL_SERVIDOR]
 
 ---
 
-## 📚 Referencias  
-- APRS.org – Documentación oficial.  
+---
+
+## 🧪 Pruebas y Verificación  
+
+Esta sección describe las pruebas realizadas para validar el correcto funcionamiento del sistema de monitoreo local basado en **APRS Trackdirect**.  
+
+### 🔹 Objetivo de las Pruebas  
+Comprobar la correcta **recepción, decodificación, almacenamiento y visualización** de los paquetes APRS transmitidos desde dispositivos de campo (trackers o iGates) hacia el servidor local.
+
+---
+
+### 🔹 Escenario de Pruebas  
+| Elemento | Descripción |
+|-----------|-------------|
+| **Entorno de servidor** | Ubuntu Server con Docker y Webmin |
+| **Aplicación principal** | APRS Trackdirect |
+| **Base de datos** | PostgreSQL |
+| **Interfaz de administración** | Webmin |
+| **Interfaz de visualización** | Panel web de Trackdirect |
+| **Fuente de datos APRS** | Tracker LoRa o simulador APRS (paquetes AX.25) |
+
+---
+
+### 🔹 Prueba 1 – Recepción de Tramas APRS  
+**Procedimiento:**
+1. Configurar el transmisor APRS (tracker o simulador) con frecuencia y formato correctos.  
+2. Enviar una trama de prueba con identificador único.  
+3. Verificar que el receptor o iGate la reciba correctamente y la reenvíe al servidor local.  
+
+**Criterio de éxito:**  
+La trama aparece en los registros de Trackdirect (`docker compose logs`) y es decodificada sin errores.
+
+---
+
+### 🔹 Prueba 2 – Almacenamiento en Base de Datos
+
+**Procedimiento:**
+
+1. Verificar que el servicio de base de datos (PostgreSQL) esté en ejecución.
+
+2. Consultar la tabla correspondiente a las tramas APRS.
+
+3. Enviar una trama de prueba desde el transmisor o simulador.
+
+4. Confirmar que la trama se almacena con su hora, posición y metadatos.
+
+**Criterio de éxito:**
+La trama se registra correctamente en la base de datos y se puede consultar mediante una sentencia SQL básica.
+
+---
+
+### 🔹 Prueba 3 – Visualización Web en Tiempo Real
+**Procedimiento:**
+
+1. Abrir la interfaz web de Trackdirect.
+
+2. Transmitir una trama APRS desde el transmisor.
+
+3. Observar el mapa o panel de monitoreo para verificar la aparición del marcador.
+
+4. Revisar que los datos de ubicación y mensajes se actualicen correctamente.
+
+**Criterio de éxito:**
+La trama se visualiza en el panel web en tiempo real, con ubicación y datos correctos.
+
+---
+### 🔹 Prueba 4 – Operación sin Conexión a Internet
+**Procedimiento:**
+
+1. Desconectar temporalmente la conexión a Internet del servidor local.
+
+2. Transmitir nuevas tramas APRS desde el tracker o simulador.
+
+3. Verificar que las tramas se reciben, procesan y almacenan localmente.
+
+4. Reconectar Internet y comprobar que el sistema sincroniza correctamente los datos pendientes (si aplica).
+
+**Criterio de éxito:**
+El sistema mantiene la funcionalidad local sin pérdida de datos y sincroniza correctamente al restablecer la conexión.
+
+
+
+
+---
+### 🔹 Prueba 5 – Administración y Monitoreo con Webmin
+**Procedimiento:**
+
+1. Acceder a la interfaz de Webmin (https://[IP_DEL_SERVIDOR]:10000).
+
+2. Verificar el estado de los contenedores y servicios (Trackdirect, PostgreSQL, web server).
+
+3. Probar reiniciar o detener algún servicio desde Webmin.
+
+4. Confirmar que el sistema continúa funcionando correctamente tras la acción.
+
+**Criterio de éxito:**
+El sistema puede ser monitoreado y administrado completamente desde Webmin, sin necesidad de acceso por terminal.
+
+---
+- Adelantado, F., Vilajosana, X., Tuset-Peiró, P., Martínez, B., Melià-Segui, J., & Watteyne, T. (2017). Understanding the Limits of LoRaWAN. IEEE Communications Magazine, 55(9), 34–40.
+https://arxiv.org/pdf/1607.08011 [arxiv.org]
+
+
+- APRS Foundation Inc. (2025). APRS: Automatic Packet Reporting System. Sitio web histórico. Consultado el 12 agosto 2025.
+https://www.aprsfoundation.org
+Para información actualizada: https://how.aprs.works [aprsfoundation.org]
+
+
+- Espressif Systems (2023). ESP32 Series Datasheet. Documento técnico. Consultado: 12 agosto 2025.
+https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf [espressif.com]
+
+
+- Semtech Corporation (2025). LoRa Technology Overview. Sitio web oficial. Consultado: 12 agosto 2025.
+https://www.semtech.com/lora [semtech.com]
+
+
+- Superintendencia de Telecomunicaciones de Costa Rica (SUTEL) (2023). Plan Nacional de Atribución de Frecuencias (PNAF), Reforma Integral. PDF, mayo 2023. Alcance N.º 99 a La Gaceta N.º 95, 30 mayo 2023.
+https://www.sutel.go.cr/sites/default/files/normativas/plan_nacional_de_atribucion_de_frecuencias_pnaf_con_reforma.pdf [sutel.go.cr]
