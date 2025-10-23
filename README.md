@@ -351,8 +351,6 @@ http://[IP_DEL_SERVIDOR]
 
 ---
 
----
-
 ## 🧪 Pruebas y Verificación  
 
 Esta sección describe las pruebas realizadas para validar el correcto funcionamiento del sistema de monitoreo local basado en **APRS Trackdirect**.  
@@ -388,66 +386,79 @@ La trama aparece en los registros de Trackdirect (`docker compose logs`) y es de
 ### 🔹 Prueba 2 – Almacenamiento en Base de Datos
 
 **Procedimiento:**
+1. Verificar que el servicio de base de datos (PostgreSQL) esté en ejecución.  
+2. Consultar la tabla correspondiente a las tramas APRS.  
+3. Enviar una trama de prueba desde el transmisor o simulador.  
+4. Confirmar que la trama se almacena con su hora, posición y metadatos.  
 
-1. Verificar que el servicio de base de datos (PostgreSQL) esté en ejecución.
-
-2. Consultar la tabla correspondiente a las tramas APRS.
-
-3. Enviar una trama de prueba desde el transmisor o simulador.
-
-4. Confirmar que la trama se almacena con su hora, posición y metadatos.
-
-**Criterio de éxito:**
+**Criterio de éxito:**  
 La trama se registra correctamente en la base de datos y se puede consultar mediante una sentencia SQL básica.
 
 ---
 
 ### 🔹 Prueba 3 – Visualización Web en Tiempo Real
 **Procedimiento:**
+1. Abrir la interfaz web de Trackdirect.  
+2. Transmitir una trama APRS desde el transmisor.  
+3. Observar el mapa o panel de monitoreo para verificar la aparición del marcador.  
+4. Revisar que los datos de ubicación y mensajes se actualicen correctamente.  
 
-1. Abrir la interfaz web de Trackdirect.
-
-2. Transmitir una trama APRS desde el transmisor.
-
-3. Observar el mapa o panel de monitoreo para verificar la aparición del marcador.
-
-4. Revisar que los datos de ubicación y mensajes se actualicen correctamente.
-
-**Criterio de éxito:**
+**Criterio de éxito:**  
 La trama se visualiza en el panel web en tiempo real, con ubicación y datos correctos.
 
 ---
+
 ### 🔹 Prueba 4 – Operación sin Conexión a Internet
 **Procedimiento:**
+1. Desconectar temporalmente la conexión a Internet del servidor local.  
+2. Transmitir nuevas tramas APRS desde el tracker o simulador.  
+3. Verificar que las tramas se reciben, procesan y almacenan localmente.  
+4. Reconectar Internet y comprobar que el sistema sincroniza correctamente los datos pendientes (si aplica).  
 
-1. Desconectar temporalmente la conexión a Internet del servidor local.
-
-2. Transmitir nuevas tramas APRS desde el tracker o simulador.
-
-3. Verificar que las tramas se reciben, procesan y almacenan localmente.
-
-4. Reconectar Internet y comprobar que el sistema sincroniza correctamente los datos pendientes (si aplica).
-
-**Criterio de éxito:**
+**Criterio de éxito:**  
 El sistema mantiene la funcionalidad local sin pérdida de datos y sincroniza correctamente al restablecer la conexión.
 
-
-
-
 ---
+
 ### 🔹 Prueba 5 – Administración y Monitoreo con Webmin
 **Procedimiento:**
+1. Acceder a la interfaz de Webmin (https://[IP_DEL_SERVIDOR]:10000).  
+2. Verificar el estado de los contenedores y servicios (Trackdirect, PostgreSQL, web server).  
+3. Probar reiniciar o detener algún servicio desde Webmin.  
+4. Confirmar que el sistema continúa funcionando correctamente tras la acción.  
 
-1. Acceder a la interfaz de Webmin (https://[IP_DEL_SERVIDOR]:10000).
-
-2. Verificar el estado de los contenedores y servicios (Trackdirect, PostgreSQL, web server).
-
-3. Probar reiniciar o detener algún servicio desde Webmin.
-
-4. Confirmar que el sistema continúa funcionando correctamente tras la acción.
-
-**Criterio de éxito:**
+**Criterio de éxito:**  
 El sistema puede ser monitoreado y administrado completamente desde Webmin, sin necesidad de acceso por terminal.
+
+---
+
+## 🧱 Tareas de Fortalecimiento y Escalabilidad  
+
+Para robustecer la seguridad, observabilidad y mantenibilidad del sistema, se han definido las siguientes tareas de mejora técnica:  
+
+### 🔒 1. Hardening de Seguridad  
+- Configurar y activar **UFW (Uncomplicated Firewall)** con reglas mínimas de entrada/salida.  
+- Asegurar el acceso **SSH** mediante el uso exclusivo de **claves públicas** (deshabilitando autenticación por contraseña).  
+- Restringir el acceso a los puertos de administración (Webmin, Grafana, Prometheus) únicamente desde redes confiables.  
+
+---
+
+### 📊 2. Observabilidad y Monitoreo  
+- Instalar y configurar **Prometheus** como colector de métricas del sistema.  
+- Integrar **Grafana** para la visualización en tiempo real de:  
+  - Estado del servidor (CPU, RAM, uso de disco).  
+  - Estadísticas de red APRS (paquetes recibidos, tramas decodificadas).  
+- Crear un **dashboard de monitoreo** con alertas básicas configuradas (por ejemplo, uso de CPU > 80%).  
+
+---
+
+### ⚙️ 3. Automatización del Despliegue  
+- Desarrollar un **script de provisionamiento** en **Ansible** o **Shell Bash** que automatice:  
+  - Instalación de dependencias (Docker, Webmin, Trackdirect, Prometheus, Grafana).  
+  - Configuración de red y servicios del servidor.  
+  - Creación de usuarios, llaves SSH y reglas del firewall.  
+- El objetivo es permitir la **replicación rápida y consistente** del entorno en nuevos servidores o equipos de respaldo.
+
 
 ---
 
