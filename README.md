@@ -311,7 +311,7 @@ Guía oficial de instalación de Docker: https://docs.docker.com/get-started/get
 ##### 🔹 Paso 1: Clonar el Repositorio
 Clonar el repositorio de APRS Trackdirect: 
 ```bash
-git clone https://github.com/tu_usuario/trackdirect.git
+git clone https://github.com/qvarforth/trackdirect.git
 cd trackdirect
 ```
 
