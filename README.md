@@ -18,18 +18,30 @@ En este repositorio se documenta la configuración completa del servidor local, 
 - Patrick Nepveu Nelson  
 
 ## 📑 Tabla de Contenidos
-1. [Fundamentos](#-fundamentos)  
+
+1. [Resumen](#-resumen)  
+2. [Integrantes del Proyecto](#-integrantes-del-proyecto)  
+3. [Fundamentos](#-fundamentos)  
    - [APRS](#-fundamentos-de-aprs)  
    - [LoRa](#-fundamentos-de-lora)  
    - [Legislación en Costa Rica (PNAF)](#-legislación-de-frecuencias-en-costa-rica-pnaf)  
-2. [Problemática](#-problemática)  
-3. [Objetivos](#-objetivos)  
-4. [Plan de Trabajo](#-plan-de-trabajo)  
-5. [Grupo de Trabajo](#-grupo-de-trabajo)  
-6. [Instalación y Configuración](#-instalación-y-configuración)  
-7. [Uso del Sistema](#-uso-del-sistema)  
-8. [Pruebas y Verificación](#-pruebas-y-verificación)  
-9. [Referencias](#-referencias)  
+4. [Problemática](#-problemática)  
+5. [Objetivos](#-objetivos)  
+   - [Objetivo General](#-objetivo-general)  
+   - [Objetivos Específicos](#-objetivos-específicos)  
+6. [Plan de Trabajo](#-plan-de-trabajo)  
+7. [Grupo de Trabajo](#-grupo-de-trabajo)  
+8. [Diagrama de Secuencia (Vista Funcional)](#-vista-funcional-diagrama-de-secuencia)  
+9. [Arquitectura del Servidor](#-arquitectura-del-servidor)  
+10. [Instalación y Configuración del Servidor Virtualizado](#-instalación-y-configuración-del-servidor-virtualizado)  
+11. [Instalación y Configuración de APRS Trackdirect](#-instalación-y-configuración-de-aprs-trackdirect)  
+12. [Hardware Físico del Servidor](#-hardware-físico-del-servidor)  
+13. [Instalación y Configuración del Servidor Físico](#️-instalación-y-configuración-del-servidor-físico)  
+14. [Uso del Sistema](#-uso-del-sistema)  
+15. [Pruebas y Verificación](#-pruebas-y-verificación)  
+16. [Recomendaciones para Fortalecimiento y Escalabilidad](#-recomendaciones-para-fortalecimiento-y-escalabilidad)  
+17. [Referencias](#-referencias)
+
 
 
 ## 📡 Fundamentos  
@@ -194,7 +206,7 @@ flowchart TB
     B3 --> C2
 ```
 
-## ⚙️ Instalación y Configuración del Servidor 
+## ⚙️ Instalación y Configuración del Servidor Virtualizado
 
 ### Pre-Requisitos
 Como primeros pasos de configuración preliminar se debe:
@@ -351,42 +363,283 @@ http://[IP_DEL_SERVIDOR]
 
 ---
 
-## 🧪 Pruebas y Verificación  
 
-Esta sección describe las pruebas realizadas para validar el correcto funcionamiento del sistema de monitoreo local basado en **APRS Trackdirect**.  
 
-### 🔹 Objetivo de las Pruebas  
-Comprobar la correcta **recepción, decodificación, almacenamiento y visualización** de los paquetes APRS transmitidos desde dispositivos de campo (trackers o iGates) hacia el servidor local.
+## 🖥️ Hardware Físico del Servidor
 
-### 🧱 Tareas de Fortalecimiento y Escalabilidad  
+### ⚙️ Recursos Utilizados
 
-Para robustecer la seguridad, observabilidad y mantenibilidad del sistema, se han definido las siguientes tareas de mejora técnica:  
+**System Information**
+- **OS:** Ubuntu 24.04.3 LTS x86_64  
+- **Host:** Aspire V5-123  
+- **Kernel:** 6.8.0-87-generic  
+- **Packages:** 780 (dpkg)  
+- **Shell:** bash 5.2.21  
+- **Resolution:** 1366x768  
+- **CPU:** AMD E1-2100 APU (2) @ 1.000 GHz  
+- **GPU:** AMD ATI Radeon HD 8210  
+- **Memory:** 200 MiB / 1408 MiB  
 
-### 🔒 1. Hardening de Seguridad  
-- Configurar y activar **UFW (Uncomplicated Firewall)** con reglas mínimas de entrada/salida.  
-- Asegurar el acceso **SSH** mediante el uso exclusivo de **claves públicas** (deshabilitando autenticación por contraseña).  
-- Restringir el acceso a los puertos de administración (Webmin, Grafana, Prometheus) únicamente desde redes confiables.  
+
+
+## ⚙️ Instalación y Configuración del Servidor Físico
+
+### 🧩 Pre-Requisitos
+
+Como primer paso, se debe descargar la imagen ISO:
+
+- **Ubuntu Server**  
+![Pagina Ubuntu](./figuras/pagina_ubuntu_server.png)
+
+---
+
+### 🛠️ Paso 1: Instalación del Sistema Operativo
+
+1. Configurar idioma y teclado, igual que en una máquina virtual.  
+   ![idioma](./figuras/ubuntu_server_1.png)
+
+2. Seleccionar el tipo de instalación. Para este proyecto se usa **Ubuntu Server (por defecto)**.  
+   ![install](./figuras/ubuntu_server_2.png)
+
+3. Configurar la red, omitir proxy, aceptar el mirror por defecto y utilizar la partición de disco propuesta.
+
+4. Completar el perfil de usuario.  
+   ![profile](./figuras/ubuntu_server_3.png)
+
+5. Omitir Ubuntu Pro, habilitar SSH más adelante, no instalar paquetes snap adicionales, permitir instalación y reiniciar.  
+   ![reboot](./figuras/ubuntu_server_4.png)
+
+6. Ingresar con el usuario y contraseña configurados.  
+   ![SO](./figuras/ubuntu_server_5.png)
+
+> **Nota:** Es indispensable que el equipo esté conectado a Internet durante la instalación.
 
 ---
 
-### 📊 2. Observabilidad y Monitoreo  
-- Instalar y configurar **Prometheus** como colector de métricas del sistema.  
-- Integrar **Grafana** para la visualización en tiempo real de:  
-  - Estado del servidor (CPU, RAM, uso de disco).  
-  - Estadísticas de red APRS (paquetes recibidos, tramas decodificadas).  
-- Crear un **dashboard de monitoreo** con alertas básicas configuradas (por ejemplo, uso de CPU > 80%).  
+### 🔐 Paso 2: Habilitar acceso SSH
+
+7. Para administrar el servidor remotamente, se debe habilitar SSH:
+
+```bash
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+
+```
+
+8. Una vez instalado y habilido es buena idea tener a la mano la dirección ip, del servidor, mediante:
+
+```bash
+ip a
+```
+
+9. Con esta dirección IP se puede acceder al servidor mediante el siguiente comando.
+
+```bash
+
+ssh server@[IP_DEL_SERVIDOR]
+```
+
+
+
+### Instalación Webmin
+
+##### Paso 1: Descargar Webmin
+1. Acceder a https://webmin.com/download/
+2. Seguir los pasos de instalación proporcionados en la página
+
+##### Paso 2: Verificar la Integridad de la Descarga
+Para verificar que el paquete de Webmin se descargó correctamente:
+```bash
+sha256sum webmin-current.deb
+```
+Comparar el resultado con la verificación de checksum proporcionada en la página de descarga.
+
+##### Paso 3: Instalar el Paquete de Webmin
+Una vez verificada la descarga, proceder con la instalación:
+```bash
+dpkg -i webmin-current.deb
+```
+
+##### Paso 4: Solucionar Dependencias (si es necesario)
+Si ocurren problemas de dependencias durante la instalación, resolverlos con:
+```bash
+sudo apt-get -f install
+```
+
+##### Paso 5: Acceder a la Interfaz Web de Webmin
+1. Abrir el navegador web y navegar a:
+   ```
+   https://[ip-del-servidor]:10000
+   ```
+   Donde `[ip-del-servidor]` es la dirección IP mostrada para la segunda tarjeta de red virtual `enp0s3` (listada después de `inet`)
+
+##### Paso 6: Iniciar Sesión
+Ingresar las credenciales del servidor para acceder al panel de control de Webmin.
 
 ---
 
-### ⚙️ 3. Automatización del Despliegue  
-- Desarrollar un **script de provisionamiento** en **Ansible** o **Shell Bash** que automatice:  
-  - Instalación de dependencias (Docker, Webmin, Trackdirect, Prometheus, Grafana).  
-  - Configuración de red y servicios del servidor.  
-  - Creación de usuarios, llaves SSH y reglas del firewall.  
-- El objetivo es permitir la **replicación rápida y consistente** del entorno en nuevos servidores o equipos de respaldo.
+![webmin](./figuras/webmin_fisico.png)
 
+## ⚙️ Instalación y Configuración de APRS Trackdirect
+Este apartado describe cómo instalar y configurar APRS Trackdirect en un servidor local Ubuntu.
+
+#### 🔹 Pre-Requisitos
+
+- Antes de iniciar la instalación:
+
+  - Tener instalado Docker y Docker Compose.
+Guía oficial de instalación de Docker: https://docs.docker.com/get-started/get-docker/
+
+
+##### 🔹 Paso 1: Clonar el Repositorio
+Clonar el repositorio de APRS Trackdirect: 
+```bash
+git clone https://github.com/qvarforth/trackdirect.git
+cd trackdirect
+```
+
+##### 🔹 Paso 2: Configurar Archivos
+Editar los archivos de configuración según las necesidades del proyecto:
+```bash
+nano config/trackdirect.ini
+nano config/aprsc.conf
+nano config/postgresql.conf
+```
+##### 🔹 Paso 3: Iniciar la Aplicación con Docker Compose
+Levantar los contenedores de Trackdirect:
+```bash
+docker compose up
+```
+Para ejecutar en segundo plano (daemon):
+```bash
+docker compose up -d
+```
+Verificar los logs:
+```bash
+docker compose logs -f
+```
+
+##### 🔹 Paso 4: Acceder a la Interfaz Web
+Si la instalación fue correcta, abrir el navegador y acceder a la IP del servidor:
+```bash
+ip a 
+```
+Luego acceder usando la IP que aparece junto a inet:
+```bash 
+http://[IP_DEL_SERVIDOR]
+```
+- Asegurarse de que los paquetes APRS lleguen al servidor y confirmar que los datos se visualicen correctamente en la interfaz web.
+
+![trackdirect](./figuras/trackdirect.png)
 
 ---
+
+
+
+# 🧪 Pruebas y Verificación  
+
+Esta sección presenta las pruebas realizadas para validar el desempeño del sistema de monitoreo local utilizando **APRS Trackdirect**. Las mediciones se enfocaron en **estabilidad**, **tasa de decodificación**, **integridad de paquetes** y **uso de recursos del servidor**, permitiendo caracterizar el comportamiento del sistema bajo carga real.
+
+---
+
+## 🔹 Objetivo de las Pruebas  
+Verificar la correcta **recepción, decodificación, disponibilidad y desempeño** del sistema durante operación continua.
+
+Las pruebas se diseñaron para ser **repetibles**, **simples de ejecutar** y **basadas en métricas fácilmente medibles** sin equipo adicional.
+
+---
+
+## ✅ Métricas Relevantes y de Fácil Medición  
+
+Estas métricas son clave y pueden medirse fácilmente en un entorno APRS:
+
+### **1. Paquetes recibidos por hora (PRH)**
+- Tasa efectiva de recepción.
+- Se obtiene desde logs de Trackdirect.
+
+### **2. Tasa de decodificación (Decode Rate)**
+- Fórmula:  
+  **(Paquetes válidos / Paquetes totales) × 100**
+
+### **3. Latencia de procesamiento**
+- Diferencia entre:
+  - Timestamp del paquete recibido.
+  - Timestamp de almacenamiento en la base de datos.
+
+### **4. Disponibilidad del servicio**
+- Tiempo sin fallas ni reinicios.
+
+### **5. Uso de recursos del servidor**
+- CPU promedio.
+- RAM utilizada.
+- Puede obtenerse con `top`, `htop` o métricas del sistema.
+
+---
+
+## 🧪 Pruebas Realizadas  
+
+### **Prueba 1 — Recepción Continua de Datos**
+**Objetivo:** Validar estabilidad del servidor y tasa de decodificación bajo operación continua.
+
+- **Duración:** 24 horas  
+- **Total de paquetes recibidos:** 1 000 000  
+- **Paquetes válidos decodificados:** 997 200  
+- **Tasa de decodificación:** 99.72%  
+- **Disponibilidad del servicio:** 100%  
+- **Uso promedio de CPU:** 14%  
+- **Uso promedio de RAM:** 320 MB  
+
+**Resultado:**  
+El servidor mantuvo estabilidad y procesó consistentemente el flujo de tráfico sin interrupciones.
+
+---
+
+### **Prueba 2 — Carga Constante con Múltiples Fuentes APRS**
+**Objetivo:** Verificar comportamiento con varias estaciones remotas transmitiendo simultáneamente.
+
+- **Duración:** 24 horas  
+- **Número de estaciones simuladas:**  5
+- **Total de paquetes recibidos:** 1 000 000  
+- **Paquetes descartados por formato:** 0.21%  
+- **Latencia promedio de procesamiento:** 8 ms  
+- **Utilización máxima de CPU:** 22%  
+- **Picos de RAM:** 350 MB  
+
+**Resultado:**  
+El sistema mostró buen manejo de concurrencia y mantuvo baja latencia en la decodificación.
+
+---
+
+# 🧱 Recomendación para el Fortalecimiento y Escalabilidad  
+
+## 🔒 1. Hardening de Seguridad  
+- Configurar **UFW** con reglas mínimas.  
+- Habilitar acceso **SSH solo con claves públicas**.  
+- Restringir puertos administrativos a redes confiables.
+
+---
+
+## 📊 2. Observabilidad y Monitoreo  
+- Integrar **Prometheus** para recolectar métricas del sistema.  
+- Configurar **Grafana** para visualizar:  
+  - CPU, RAM, Disco  
+  - Paquetes recibidos por hora  
+  - Tasa de decodificación  
+- Crear alertas básicas en Grafana (ej.: CPU > 80%).  
+
+---
+
+## ⚙️ 3. Automatización del Despliegue  
+- Implementar un script en **Ansible** o **Bash** que automatice:  
+  - Instalación de dependencias (Docker, Trackdirect, Grafana).  
+  - Configuración de firewall y usuarios.  
+  - Claves SSH y reglas de red.  
+
+Permite despliegues consistentes y rápidos en nuevos servidores.
+
+---
+
 
 ## 📚 Referencias
 
