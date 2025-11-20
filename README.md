@@ -587,8 +587,8 @@ Estas métricas son clave y pueden medirse fácilmente en un entorno APRS:
 - **Paquetes válidos decodificados:** 997 200  
 - **Tasa de decodificación:** 99.72%  
 - **Disponibilidad del servicio:** 100%  
-- **Uso promedio de CPU:** 14%  
-- **Uso promedio de RAM:** 320 MB  
+- **Uso promedio de CPU:** 73%  
+- **Uso promedio de RAM:** 1.2 GB + swap
 
 **Resultado:**  
 El servidor mantuvo estabilidad y procesó consistentemente el flujo de tráfico sin interrupciones.
@@ -603,8 +603,8 @@ El servidor mantuvo estabilidad y procesó consistentemente el flujo de tráfico
 - **Total de paquetes recibidos:** 1 000 000  
 - **Paquetes descartados por formato:** 0.21%  
 - **Latencia promedio de procesamiento:** 8 ms  
-- **Utilización máxima de CPU:** 22%  
-- **Picos de RAM:** 350 MB  
+- **Utilización máxima de CPU:** 100%  
+- **Picos de RAM:** 1.2 GB + swap  
 
 **Resultado:**  
 El sistema mostró buen manejo de concurrencia y mantuvo baja latencia en la decodificación.
